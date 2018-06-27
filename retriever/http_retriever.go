@@ -3,13 +3,12 @@ package retriever
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 )
 
 type HttpRetriever struct {
-	URL         string
-	client      *http.Client
+	URL    string
+	client *http.Client
 }
 
 // HttpClient updates client http.Client if the given http.Client is valid
@@ -35,7 +34,6 @@ func NewHttpRetriever(url string, options ...func(*HttpRetriever) error) (Retrie
 	return retriever, nil
 }
 
-
 func (h *HttpRetriever) Retrieve() (io.Reader, error) {
 	resp, err := h.client.Get(h.URL)
 	if err != nil {
@@ -45,7 +43,6 @@ func (h *HttpRetriever) Retrieve() (io.Reader, error) {
 		return nil, fmt.Errorf("request failed - status code %d)", resp.StatusCode)
 	}
 
-	log.Println(resp.Header)
-
 	return resp.Body, nil
 }
+
